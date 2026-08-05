@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -135,6 +136,79 @@
             cursor: pointer;
         }
 
+        /* RIWAYAT PENGUNJUNG */
+        .visitor-box {
+            background-color: #fff0fc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #ff02dd;
+        }
+
+        .visitor-info {
+            background-color: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 5px solid #ff02dd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+
+        .visitor-info strong {
+            color: #ff02dd;
+        }
+
+        .btn-hapus {
+            background-color: #ff02dd;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-hapus:hover {
+            background-color: #d900bb;
+        }
+
+        /* MAPS */
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid #ff02dd;
+            margin-top: 15px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .lokasi-info {
+            background-color: #eff6ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tombol-maps {
+            display: inline-block;
+            background-color: #ff02dd;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 5px;
+        }
+
+        .tombol-maps:hover {
+            background-color: #d900bb;
+        }
+
         footer {
             text-align: center;
             background-color: #ff02dd;
@@ -145,6 +219,7 @@
 
         /* TAMPILAN HP */
         @media (max-width: 600px) {
+
             .container {
                 width: 85%;
                 padding: 20px;
@@ -161,16 +236,22 @@
             table {
                 font-size: 14px;
             }
+
+            .map-container {
+                height: 300px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- HEADER -->
     <header>
         <h1>DATA PRIBADI ONLINE</h1>
         <p>Profil Pribadi Saya</p>
     </header>
+
 
     <div class="container">
 
@@ -226,6 +307,7 @@
         <h2>Data Pribadi</h2>
 
         <table>
+
             <tr>
                 <th>Data</th>
                 <th>Keterangan</th>
@@ -248,13 +330,14 @@
 
             <tr>
                 <td>Alamat</td>
-                <td>KALANGN II</td>
+                <td>LAMPUNG TENGAH KALANGN II</td>
             </tr>
 
             <tr>
                 <td>Hobi</td>
                 <td>ngemil/jajan</td>
             </tr>
+
         </table>
 
 
@@ -262,6 +345,7 @@
         <h2>Riwayat Pendidikan</h2>
 
         <table>
+
             <tr>
                 <th>No</th>
                 <th>Sekolah</th>
@@ -285,6 +369,7 @@
                 <td>SMK</td>
                 <td>2024 - 2027</td>
             </tr>
+
         </table>
 
 
@@ -292,9 +377,65 @@
         <h2>Kontak</h2>
 
         <div class="kontak">
+
             <p><b>Email:</b> dellaandini@email.com</p>
+
             <p><b>No. HP:</b> 082180681929</p>
+
             <p><b>Instagram:</b> andnsukajajan_</p>
+
+        </div>
+
+
+        <!-- MAPS -->
+        <h2>Lokasi</h2>
+
+        <div class="lokasi-info">
+
+            <p>
+                <b>Alamat:</b> LAMPUNG TENGAH, KALANGN II
+            </p>
+
+            <p>
+                Kamu dapat melihat lokasi pada peta di bawah ini.
+            </p>
+
+            <a
+                href="https://www.google.com/maps/search/?api=1&query=Kalangn%20II%2C%20Lampung%20Tengah%2C%20Lampung%2C%20Indonesia"
+                target="_blank"
+                class="tombol-maps">
+                📍 Buka Google Maps
+            </a>
+
+        </div>
+
+        <div class="map-container">
+
+            <iframe
+                src="https://www.google.com/maps?q=Kalangn%20II%2C%20Lampung%20Tengah%2C%20Lampung%2C%20Indonesia&output=embed"
+                loading="lazy"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+
+        <!-- RIWAYAT PENGUNJUNG -->
+        <h2>Riwayat Pengunjung</h2>
+
+        <div class="visitor-box">
+
+            <p>
+                <b>Jumlah kunjungan pada perangkat ini:</b>
+                <span id="jumlahKunjungan">0</span>
+            </p>
+
+            <div id="riwayatPengunjung"></div>
+
+            <button class="btn-hapus" onclick="hapusRiwayat()">
+                Hapus Riwayat
+            </button>
+
         </div>
 
     </div>
@@ -313,6 +454,10 @@
     <!-- JAVASCRIPT -->
     <script>
 
+        /* =========================
+           ALBUM FOTO
+        ========================= */
+
         function bukaFoto(namaFoto) {
 
             document.getElementById("modalFoto").style.display = "flex";
@@ -321,20 +466,143 @@
 
         }
 
+
         function tutupFoto() {
 
             document.getElementById("modalFoto").style.display = "none";
 
         }
 
+
+        /* =========================
+           RIWAYAT PENGUNJUNG
+        ========================= */
+
+        function catatPengunjung() {
+
+            let riwayat =
+                JSON.parse(localStorage.getItem("riwayatPengunjung")) || [];
+
+            let sekarang = new Date();
+
+            let tanggal =
+                sekarang.toLocaleDateString("id-ID", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric"
+                });
+
+            let jam =
+                sekarang.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                });
+
+            let dataKunjungan = {
+                tanggal: tanggal,
+                jam: jam
+            };
+
+            riwayat.unshift(dataKunjungan);
+
+            /* Maksimal 20 riwayat */
+            if (riwayat.length > 20) {
+                riwayat = riwayat.slice(0, 20);
+            }
+
+            localStorage.setItem(
+                "riwayatPengunjung",
+                JSON.stringify(riwayat)
+            );
+
+            tampilkanRiwayat();
+        }
+
+
+        function tampilkanRiwayat() {
+
+            let riwayat =
+                JSON.parse(localStorage.getItem("riwayatPengunjung")) || [];
+
+            let tempat =
+                document.getElementById("riwayatPengunjung");
+
+            let jumlah =
+                document.getElementById("jumlahKunjungan");
+
+            jumlah.textContent = riwayat.length;
+
+            tempat.innerHTML = "";
+
+            if (riwayat.length === 0) {
+
+                tempat.innerHTML =
+                    "<p>Belum ada riwayat kunjungan.</p>";
+
+                return;
+            }
+
+            riwayat.forEach(function(data, index) {
+
+                let item =
+                    document.createElement("div");
+
+                item.className = "visitor-info";
+
+                item.innerHTML =
+                    "<strong>Kunjungan ke-" +
+                    (riwayat.length - index) +
+                    "</strong><br>" +
+
+                    "📅 Tanggal: " +
+                    data.tanggal +
+                    "<br>" +
+
+                    "⏰ Jam: " +
+                    data.jam;
+
+                tempat.appendChild(item);
+
+            });
+
+        }
+
+
+        function hapusRiwayat() {
+
+            if (
+                confirm(
+                    "Apakah kamu yakin ingin menghapus semua riwayat pengunjung?"
+                )
+            ) {
+
+                localStorage.removeItem(
+                    "riwayatPengunjung"
+                );
+
+                tampilkanRiwayat();
+
+            }
+
+        }
+
+
+        /* Jalankan saat halaman dibuka */
+        catatPengunjung();
+
     </script>
 
 
+    <!-- FOOTER -->
     <footer>
 
-        <p>&copy; 2026 Data Pribadi Online</p>
+        <p>
+            &copy; 2026 Data Pribadi Online
+        </p>
 
     </footer>
 
 </body>
 </html>
+```
