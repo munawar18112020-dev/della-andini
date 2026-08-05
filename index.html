@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -47,6 +46,7 @@
             color: #ff02dd;
             border-bottom: 2px solid #ff02dd;
             padding-bottom: 8px;
+            margin-top: 30px;
         }
 
         table {
@@ -76,12 +76,91 @@
             border-radius: 8px;
         }
 
+        /* ALBUM PROFIL */
+        .album {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .album-item {
+            height: 180px;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 3px solid #ff02dd;
+            cursor: pointer;
+            background-color: #eee;
+        }
+
+        .album-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .album-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* FOTO BESAR */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 10px;
+            border: 4px solid white;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         footer {
             text-align: center;
             background-color: #ff02dd;
             color: white;
             padding: 15px;
             margin-top: 30px;
+        }
+
+        /* TAMPILAN HP */
+        @media (max-width: 600px) {
+            .container {
+                width: 85%;
+                padding: 20px;
+            }
+
+            .album {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .album-item {
+                height: 140px;
+            }
+
+            table {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -95,20 +174,55 @@
 
     <div class="container">
 
-        <!-- Profil -->
+        <!-- PROFIL -->
         <div class="profil">
+
             <img src="jpg.01.jpeg" alt="Foto Profil" class="foto">
 
             <h2>Profil Saya</h2>
 
             <p>
-                Halo! Nama saya <b>Della Andini </b>.
-                ini data pribadi online saya
-                terimakasih sudah mengunjungi data pribadi online saya
+                Halo! Nama saya <b>Della Andini</b>.
+                Ini data pribadi online saya.
+                Terima kasih sudah mengunjungi data pribadi online saya.
             </p>
+
         </div>
 
-        <!-- Data Pribadi -->
+
+        <!-- ALBUM PROFIL -->
+        <h2>Album Profil</h2>
+
+        <div class="album">
+
+            <div class="album-item" onclick="bukaFoto('jpg.02.jpeg')">
+                <img src="jpg.02.jpeg" alt="Foto 1">
+            </div>
+
+            <div class="album-item" onclick="bukaFoto('jpg.03.jpeg')">
+                <img src="jpg.03.jpeg" alt="Foto 2">
+            </div>
+
+            <div class="album-item" onclick="bukaFoto('jpg.04.jpeg')">
+                <img src="jpg.04.jpeg" alt="Foto 3">
+            </div>
+
+            <div class="album-item" onclick="bukaFoto('jpg.05.jpeg')">
+                <img src="jpg.05.jpeg" alt="Foto 4">
+            </div>
+
+            <div class="album-item" onclick="bukaFoto('jpg.06.jpeg')">
+                <img src="jpg.06.jpeg" alt="Foto 5">
+            </div>
+
+            <div class="album-item" onclick="bukaFoto('jpg.07.jpeg')">
+                <img src="jpg.07.jpeg" alt="Foto 6">
+            </div>
+
+        </div>
+
+
+        <!-- DATA PRIBADI -->
         <h2>Data Pribadi</h2>
 
         <table>
@@ -118,18 +232,18 @@
             </tr>
 
             <tr>
-                <td>Nama Lengka </td>
+                <td>Nama Lengkap</td>
                 <td>Della Andini</td>
             </tr>
 
             <tr>
                 <td>Tempat, Tanggal Lahir</td>
-                <td>Tempuran, 15 febuari 2009</td>
+                <td>Tempuran, 15 Februari 2009</td>
             </tr>
 
             <tr>
                 <td>Jenis Kelamin</td>
-                <td>perempuan</td>
+                <td>Perempuan</td>
             </tr>
 
             <tr>
@@ -143,7 +257,8 @@
             </tr>
         </table>
 
-        <!-- Pendidikan -->
+
+        <!-- PENDIDIKAN -->
         <h2>Riwayat Pendidikan</h2>
 
         <table>
@@ -172,7 +287,8 @@
             </tr>
         </table>
 
-        <!-- Kontak -->
+
+        <!-- KONTAK -->
         <h2>Kontak</h2>
 
         <div class="kontak">
@@ -183,10 +299,42 @@
 
     </div>
 
+
+    <!-- MODAL FOTO -->
+    <div class="modal" id="modalFoto" onclick="tutupFoto()">
+
+        <span class="close">&times;</span>
+
+        <img id="fotoBesar" src="" alt="Foto Besar">
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        function bukaFoto(namaFoto) {
+
+            document.getElementById("modalFoto").style.display = "flex";
+
+            document.getElementById("fotoBesar").src = namaFoto;
+
+        }
+
+        function tutupFoto() {
+
+            document.getElementById("modalFoto").style.display = "none";
+
+        }
+
+    </script>
+
+
     <footer>
+
         <p>&copy; 2026 Data Pribadi Online</p>
+
     </footer>
 
 </body>
 </html>
-```
